@@ -1,0 +1,45 @@
+testing:
+  sampling:
+    measurements_count: 20
+    total_duration_seconds: 10
+    sampling_frequency_hz: 2
+  error_simulation:
+    # Master switch + per-failure-mode trigger probability (0.0-1.0).
+    # All probabilities default to 0.0 (disabled) unless set here.
+    enabled: false
+    connection_refused_probability: 0.0
+    timeout_probability: 0.0
+    dropped_sample_probability: 0.0
+    malformed_response_probability: 0.0
+    out_of_range_probability: 0.0
+
+ammeters:
+  greenlee:
+    port: 5000
+    command: "MEASURE_GREENLEE -get_measurement"
+  entes:
+    port: 5001
+    command: "MEASURE_ENTES -get_data"
+  circutor:
+    port: 5002
+    command: "MEASURE_CIRCUTOR -get_measurement -current"
+
+analysis:
+  statistical_metrics:
+    - mean
+    - median
+    - stdev
+    - min
+    - max
+  visualization:
+    enabled: true
+    plot_types:
+      - line
+      - histogram
+      - boxplot
+      - consistency_trend
+    output_dir: "results/plots"
+
+result_management:
+  results_dir: "results"
+  filename_pattern: "{timestamp}_{ammeter_type}_{run_id}.json"
